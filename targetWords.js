@@ -1,4 +1,4 @@
-[
+const wordList = [
   "cigar",
   "rebut",
   "sissy",

@@ -5,43 +5,49 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-  <title>Wordle Clone</title>
+  
+  <script src="dictionary.js" type="text/javascript" defer></script>
+  <script>
+    
+    // get game type
+    
+    const queryString = window.location.search;
+    let params = new URLSearchParams(queryString);
+
+    const availableGames = ['standard','minecraft','minecraftmobs','halloween','bonfirenight'];
+    const gameType = ( params.has('game') && availableGames.includes(params.get('game')) ) 
+      ? `-${params.get('game')}` : '';
+    
+    const dataFile = (gameType != '') ? gameType.replace('-','') : 'standard';
+    
+    //include word list
+    const wordFile = document.createElement('script');
+    wordFile.setAttribute('src', `targetWords${gameType}.js`);
+    wordFile.setAttribute('type', 'text/javascript');
+    wordFile.setAttribute('defer', '');
+    document.head.appendChild(wordFile);
+    
+    //include game code
+    const gameFile = document.createElement('script');
+    gameFile.setAttribute('src', `game.js`);
+    gameFile.setAttribute('type', 'module');
+    gameFile.setAttribute('defer', '');
+    document.head.appendChild(gameFile);
+    
+  </script>
+
+  <title>Guess the Word (Wordle Clone v2.2)</title>
 </head>
 <body>
+
+  <div class="grid-header"></div>
+
+  <div class="interface"></div>
+
   <div class="alert-container" data-alert-container></div>
-  <div data-guess-grid class="guess-grid">
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-    <div class="tile"></div>
-  </div>
+  
+  <div data-guess-grid class="guess-grid"></div>
+
   <div data-keyboard class="keyboard">
     <button class="key" data-key="Q">Q</button>
     <button class="key" data-key="W">W</button>
@@ -78,5 +84,6 @@
       </svg>
     </button>
   </div>
+  
 </body>
 </html>
